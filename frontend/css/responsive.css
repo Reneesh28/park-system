@@ -1,0 +1,125 @@
+/**
+ * PARKWISE - Responsive Breakpoints & Device Adaptations
+ * Visual Reference: Mobile Horizontal Navigation, Fluid SVG Map, Responsive Tables
+ */
+
+/* ==========================================================================
+   Small Devices & Mobile (<= 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 3.5rem;
+    --sidebar-width: 100%;
+  }
+
+  .container,
+  .container-fluid {
+    padding-left: var(--space-3);
+    padding-right: var(--space-3);
+  }
+
+  .grid-cols-2,
+  .grid-cols-3,
+  .grid-cols-4 {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-3);
+  }
+
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .dashboard-sidebar {
+    display: none;
+  }
+
+  .mobile-subnav {
+    display: flex;
+  }
+
+  .dashboard-main {
+    padding: var(--space-3);
+    padding-bottom: 80px;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: var(--space-2);
+  }
+
+  .stat-card-value {
+    font-size: 1.5rem;
+  }
+
+  .active-session-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-3);
+  }
+
+  .active-session-banner .btn {
+    width: 100%;
+  }
+
+  .auth-card {
+    padding: var(--space-5) var(--space-4);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .modal-dialog {
+    max-width: 95vw;
+    padding: var(--space-4);
+  }
+
+  .toast-container {
+    right: 0.5rem;
+    top: 4rem;
+    max-width: calc(100vw - 1rem);
+  }
+
+  .toast {
+    font-size: var(--font-size-xs);
+    padding: 0.5rem 0.75rem;
+  }
+
+  .header-search-box {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   Medium Devices & Tablets (769px to 1024px)
+   ========================================================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  :root {
+    --sidebar-width: 13rem;
+  }
+
+  .grid-cols-3,
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-main {
+    padding: var(--space-4);
+  }
+}
+
+/* ==========================================================================
+   Large Displays (>= 1280px)
+   ========================================================================== */
+@media (min-width: 1280px) {
+  .dashboard-main {
+    padding: var(--space-5) var(--space-8);
+  }
+}

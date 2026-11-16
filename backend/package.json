@@ -1,0 +1,39 @@
+{
+  "name": "parkwise-backend",
+  "version": "1.0.0",
+  "description": "Backend API for PARKWISE QR-Based Smart Campus Parking Management System",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node src/scripts/seedDatabase.js",
+    "test": "node src/scripts/testAuth.js && node src/scripts/testFullBackend.js && node src/scripts/testFullIntegration.js",
+    "test:auth": "node src/scripts/testAuth.js",
+    "test:backend": "node src/scripts/testFullBackend.js",
+    "test:e2e": "node src/scripts/testFullIntegration.js"
+  },
+  "keywords": [
+    "parkwise",
+    "campus-parking",
+    "smart-parking",
+    "qr-code",
+    "express",
+    "mongoose",
+    "nodejs"
+  ],
+  "author": "ParkWise Development Team",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.5"
+  }
+}

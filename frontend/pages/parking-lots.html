@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Parking Lots Directory - ParkWise</title>
+  
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <!-- Header / Navbar injected by JavaScript -->
+  <div id="navbar-container"></div>
+
+  <div class="dashboard-container">
+    <!-- Sidebar / Mobile Subnav injected by JavaScript -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-main">
+      <div class="dashboard-header flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <h2>Campus Two-Wheeler Lots &amp; Map</h2>
+          <p class="text-muted" style="margin-bottom: 0; font-size: var(--font-size-xs);">
+            Real-time zone occupancy, interactive campus guide, and walking distance estimates.
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <label for="lots-destination-select" style="font-size: var(--font-size-xs); font-weight: var(--font-weight-medium); white-space: nowrap;">
+            Walking to:
+          </label>
+          <select id="lots-destination-select" class="form-input form-select" style="min-width: 190px; padding: 4px 8px; font-size: var(--font-size-xs);">
+            <!-- Populated by JS -->
+          </select>
+        </div>
+      </div>
+
+      <!-- Interactive SVG Campus Map Accordion/Card (Visual Reference) -->
+      <div class="card" style="margin-bottom: var(--space-4); padding: var(--space-3);">
+        <div class="flex items-center justify-between flex-wrap gap-2" style="margin-bottom: var(--space-2);">
+          <div class="font-semibold text-navy flex items-center gap-2" style="font-size: var(--font-size-sm);">
+            <span>Campus Parking Map</span>
+            <span class="badge badge-info" style="font-size: 10px; padding: 2px 6px;">Interactive</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-muted" style="font-size: 11px;">Select a zone to inspect its layout</span>
+            <a href="./campus-map.html" class="btn btn-secondary btn-sm" style="font-size: 11px; padding: 3px 8px;">
+              Open Full Map &rarr;
+            </a>
+          </div>
+        </div>
+        <div id="lots-campus-map-container">
+          <!-- Injected by campus-map.component.js -->
+        </div>
+      </div>
+
+      <!-- Filter and Search Controls Bar -->
+      <div class="card" style="margin-bottom: var(--space-4); padding: var(--space-3);">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <!-- Search input -->
+          <div style="flex: 1; min-width: 220px;">
+            <input
+              type="text"
+              id="lot-search-input"
+              class="form-input"
+              placeholder="Search by lot name, code, or location..."
+              style="padding: 6px 12px; font-size: var(--font-size-xs);"
+            >
+          </div>
+
+          <!-- Availability Filter Chips -->
+          <div class="flex items-center gap-2 flex-wrap">
+            <button class="btn btn-primary btn-sm filter-btn active" data-filter="all">All Lots</button>
+            <button class="btn btn-outline btn-sm filter-btn" data-filter="underutilized">
+              Underutilized (&gt;60% Free)
+            </button>
+            <button class="btn btn-outline btn-sm filter-btn" data-filter="moderate">Moderate</button>
+            <button class="btn btn-outline btn-sm filter-btn" data-filter="full">Near Full</button>
+          </div>
+
+          <!-- Sort Dropdown -->
+          <div class="flex items-center gap-2">
+            <span class="text-muted" style="font-size: 11px; white-space: nowrap;">Sort:</span>
+            <select id="lot-sort-select" class="form-input form-select" style="min-width: 150px; padding: 4px 8px; font-size: var(--font-size-xs);">
+              <option value="available-desc">Most Available</option>
+              <option value="available-asc">Least Available</option>
+              <option value="distance-asc">Closest to Walk</option>
+              <option value="capacity-desc">Highest Capacity</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lots Cards Grid -->
+      <div id="parking-lots-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--space-4);">
+        <!-- Populated by JavaScript -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Application Logic -->
+  <script src="../dist/parking-lots.bundle.js"></script>
+</body>
+</html>

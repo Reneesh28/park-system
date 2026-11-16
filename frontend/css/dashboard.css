@@ -1,0 +1,374 @@
+/**
+ * PARKWISE - Dashboard Layout & Styles
+ * Visual Reference: ParkSmart Navy Sidebar, Teal Accents, and Clean Metric Cards
+ */
+
+.dashboard-container {
+  display: flex;
+  min-height: calc(100vh - var(--header-height));
+  width: 100%;
+}
+
+/* ==========================================================================
+   Desktop Navy Sidebar (Matching Reference)
+   ========================================================================== */
+.dashboard-sidebar {
+  width: var(--sidebar-width);
+  background-color: var(--color-bg-dark); /* #0B2447 Deep Navy */
+  color: #ffffff;
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: sticky;
+  top: var(--header-height);
+  height: calc(100vh - var(--header-height));
+  z-index: var(--z-sidebar);
+}
+
+.sidebar-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sidebar-item a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-md);
+  color: #cbd5e1; /* slate-300 */
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.sidebar-item a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.sidebar-item.active a {
+  background-color: var(--color-secondary); /* #0F9D9A Luminous Teal */
+  color: #ffffff;
+  font-weight: var(--font-weight-semibold);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-footer-note {
+  margin-top: auto;
+  border-radius: var(--radius-md);
+  background-color: rgba(255, 255, 255, 0.08);
+  padding: 0.75rem;
+  font-size: 11px;
+  line-height: 1.45;
+  color: #94a3b8;
+}
+
+/* ==========================================================================
+   Mobile Bottom Navigation Bar & More Menu Drawer
+   ========================================================================== */
+.mobile-subnav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: var(--color-bg-dark); /* #0B2447 */
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  z-index: 999;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 0.5rem;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.mobile-subnav-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: #94a3b8;
+  font-size: 10px;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  flex: 1;
+  text-align: center;
+}
+
+.mobile-subnav-link:hover,
+.mobile-subnav-link.active {
+  color: #ffffff;
+}
+
+.mobile-subnav-link.active svg {
+  stroke: var(--color-secondary); /* #0F9D9A */
+}
+
+/* Elevated Center Scan QR Button on Mobile */
+.mobile-scan-pill {
+  position: relative;
+  top: -10px;
+  background: var(--color-secondary);
+  color: #ffffff !important;
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  box-shadow: 0 4px 12px rgba(15, 157, 154, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.mobile-scan-pill span {
+  font-size: 9px;
+  font-weight: 700;
+  margin-top: -2px;
+}
+
+.mobile-scan-pill svg {
+  stroke: #ffffff !important;
+}
+
+/* Mobile More Drawer / Bottom Sheet */
+.mobile-more-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+
+.mobile-more-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+.mobile-more-content {
+  position: absolute;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-top-left-radius: var(--radius-xl);
+  border-top-right-radius: var(--radius-xl);
+  padding: 1rem 1.25rem 1.5rem;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+  animation: slideUp 200ms ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.mobile-more-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.mobile-more-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  padding: 0.75rem 0.5rem;
+  background: #f8fafc;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.mobile-more-item.active {
+  background: #e6fffa;
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
+}
+
+.mobile-more-item:hover {
+  background: #f1f5f9;
+  text-decoration: none;
+}
+
+.mobile-subnav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.mobile-subnav-link.active {
+  background-color: var(--color-secondary);
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .dashboard-sidebar {
+    display: none;
+  }
+  .mobile-subnav {
+    display: flex;
+  }
+  .dashboard-container {
+    flex-direction: column;
+  }
+}
+
+/* ==========================================================================
+   Main Content Area
+   ========================================================================== */
+.dashboard-main {
+  flex: 1 1 0%;
+  min-width: 0;
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--color-bg-base);
+}
+
+.dashboard-header {
+  margin-bottom: var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.dashboard-header h2 {
+  margin-bottom: 0.125rem;
+  font-size: var(--font-size-xl);
+  color: var(--color-primary);
+}
+
+/* ==========================================================================
+   Dashboard Statistic Cards (Matching Reference)
+   ========================================================================== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.stat-card {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-surface);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.stat-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.stat-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stat-card-title {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+}
+
+.stat-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-card-value {
+  margin-top: 0.5rem;
+  font-size: 1.875rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+.stat-card-subtitle {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 0.25rem;
+}
+
+/* ==========================================================================
+   Active Parking Session Banner (Bike Found / Active Session)
+   ========================================================================== */
+.active-session-banner {
+  border-radius: var(--radius-lg);
+  border: 2px solid #2563eb;
+  background-color: #eff6ff; /* Blue 50 */
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.active-session-banner h3 {
+  color: #1e40af;
+  margin-bottom: 0.25rem;
+}
+
+.session-timer-display {
+  font-family: var(--font-family-mono);
+  font-size: 1.75rem;
+  font-weight: var(--font-weight-bold);
+  color: #1d4ed8;
+  margin-top: var(--space-1);
+}
+
+/* ==========================================================================
+   Recommendation Hero Card
+   ========================================================================== */
+.recommendation-hero-card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--color-secondary);
+  background: #ffffff;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.recommendation-badge-corner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: var(--color-secondary);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: var(--font-weight-bold);
+  padding: 0.25rem 0.75rem;
+  border-bottom-left-radius: var(--radius-md);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ParkWise - Smart Campus Two-Wheeler Parking</title>
+
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="./css/variables.css">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/dashboard.css">
+  <link rel="stylesheet" href="./css/responsive.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="container flex items-center justify-between">
+      <div class="navbar-brand">
+        <span class="brand-icon-badge">
+          [P]
+        </span>
+        <div style="line-height: 1.15;">
+          <div style="font-weight: 700; color: var(--color-primary); font-size: var(--font-size-md);">ParkWise</div>
+          <div style="font-size: 10px; color: var(--color-text-muted);">Smart Campus Mobility</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="badge badge-success" style="font-size: 11px;">Phase 1 Complete</span>
+        <a href="./login.html" class="btn btn-outline btn-sm">Sign In</a>
+        <a href="./register.html" class="btn btn-primary btn-sm">Register</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="app-main">
+    <div class="container container-narrow">
+
+      <!-- Welcome Hero Card -->
+      <div class="card"
+        style="margin-bottom: var(--space-4); border-top: 4px solid var(--color-secondary); padding: var(--space-5);">
+        <div class="flex items-center justify-between" style="margin-bottom: var(--space-2);">
+          <span class="badge badge-info" style="font-size: 11px;">Smart University Two-Wheeler Assistant</span>
+          <span class="badge badge-success" style="font-size: 11px;">● Live Mock System</span>
+        </div>
+        <h1 style="font-size: var(--font-size-2xl); color: var(--color-primary); margin-bottom: 4px;">
+          Welcome to ParkWise
+        </h1>
+        <p class="lead"
+          style="color: var(--color-text-muted); margin-bottom: var(--space-4); font-size: var(--font-size-sm);">
+          QR-Based Campus Two-Wheeler Parking Management &amp; Student Rewards System.
+        </p>
+
+        <!-- Live System Metric Indicators -->
+        <div
+          style="background-color: var(--color-bg-alt); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); margin-bottom: var(--space-4);">
+          <div class="flex items-center justify-between" style="margin-bottom: 4px; font-size: var(--font-size-xs);">
+            <span class="text-muted">Data Engine:</span>
+            <strong id="api-status" class="text-teal">Loading...</strong>
+          </div>
+          <div class="flex items-center justify-between" style="margin-bottom: 4px; font-size: var(--font-size-xs);">
+            <span class="text-muted">Active Campus Zones:</span>
+            <strong id="mock-lots-count" class="text-navy">Loading...</strong>
+          </div>
+          <div class="flex items-center justify-between" style="margin-bottom: 4px; font-size: var(--font-size-xs);">
+            <span class="text-muted">Live Space Availability:</span>
+            <strong id="campus-capacity-status" class="font-mono text-success">Loading...</strong>
+          </div>
+          <div class="flex items-center justify-between" style="font-size: var(--font-size-xs);">
+            <span class="text-muted">Initialized Timestamp:</span>
+            <span id="init-timestamp"
+              style="font-family: var(--font-family-mono); color: var(--color-text-muted);">--:--:--</span>
+          </div>
+        </div>
+
+        <!-- 1-Click Fast Evaluation Logins -->
+        <div
+          style="background: #f0fdfc; border: 1px dashed var(--color-secondary); border-radius: var(--radius-md); padding: var(--space-4); margin-bottom: var(--space-4);">
+          <h4 style="margin-bottom: 4px; color: var(--color-primary); font-size: var(--font-size-sm);">Instant
+            Evaluation Logins</h4>
+          <p class="text-muted" style="font-size: 11px; margin-bottom: var(--space-3);">
+            Select an account below to sign in instantly with simulated campus credentials:
+          </p>
+          <div class="flex items-center gap-2 flex-wrap">
+            <button id="quick-student-login-btn" class="btn btn-primary btn-sm">
+              Student: Alex Rivera
+            </button>
+            <button id="quick-admin-login-btn" class="btn btn-secondary btn-sm">
+              Campus Admin
+            </button>
+            <button id="portal-reset-data-btn" class="btn btn-outline btn-sm"
+              style="color: var(--color-danger); border-color: var(--color-danger);">
+              Reset Demo Data
+            </button>
+          </div>
+        </div>
+
+        <!-- Portal Navigation Cards -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="card"
+            style="padding: var(--space-4); background: #ffffff; border: 1px solid var(--color-border);">
+            <h4 style="margin-bottom: 4px; font-size: var(--font-size-sm); color: var(--color-primary);">Student Portal
+            </h4>
+            <p class="text-muted" style="font-size: 11px; margin-bottom: var(--space-3);">
+              Interactive campus map, smart recommendations, QR check-in &amp; check-out, active timers, and rewards.
+            </p>
+            <ul style="padding-left: var(--space-4); font-size: var(--font-size-xs); margin-bottom: 0;">
+              <li><a href="./pages/student-dashboard.html">Dashboard Overview</a></li>
+              <li><a href="./pages/parking-lots.html">Campus Lots &amp; Map</a></li>
+              <li><a href="./pages/scan-parking.html">Scan Parking QR</a></li>
+              <li><a href="./pages/find-vehicle.html">Locate My Bike</a></li>
+              <li><a href="./pages/rewards.html">Rewards &amp; Catalog</a></li>
+              <li><a href="./pages/parking-history.html">Session History</a></li>
+            </ul>
+          </div>
+
+          <div class="card"
+            style="padding: var(--space-4); background: #ffffff; border: 1px solid var(--color-border); display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h4 style="margin-bottom: 4px; font-size: var(--font-size-sm); color: var(--color-primary);">Campus
+                Administration</h4>
+              <p class="text-muted" style="margin-size: 11px; font-size: 11px; margin-bottom: var(--space-3);">
+                Occupancy monitoring, classroom simulation controls (bike enter/exit), zone capacity editor, and live
+                feed.
+              </p>
+              <ul style="padding-left: var(--space-4); font-size: var(--font-size-xs); margin-bottom: var(--space-3);">
+                <li><a href="./pages/admin-dashboard.html">Admin Analytics Console</a></li>
+              </ul>
+            </div>
+            <a href="./pages/admin-dashboard.html" class="btn btn-primary btn-sm w-full" style="text-align: center;">
+              Open Admin Console &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="container flex items-center justify-between flex-wrap gap-2">
+      <div>ParkWise &copy; 2026. Smart Campus Two-Wheeler Parking.</div>
+      <div class="text-muted font-mono" style="font-size: 11px;">Navy &amp; Teal Theme &bull; Zero Build Step</div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Page Controller Module -->
+  <script src="dist/index.bundle.js"></script>
+</body>
+
+</html>

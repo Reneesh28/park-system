@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Find My Bike - ParkWise</title>
+  
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <!-- Header / Navbar injected by JavaScript -->
+  <div id="navbar-container"></div>
+
+  <div class="dashboard-container">
+    <!-- Sidebar / Mobile Subnav injected by JavaScript -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-main">
+      <div class="dashboard-header flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <h2>Find My Bike</h2>
+          <p class="text-muted" style="margin-bottom: 0; font-size: var(--font-size-xs);">
+            Enter your registration number to locate your parked bike and view walking directions.
+          </p>
+        </div>
+      </div>
+
+      <!-- Registration Search Card (Visual Reference Style) -->
+      <div class="card" style="margin-bottom: var(--space-4); padding: var(--space-4); max-width: 680px;">
+        <label for="vehicle-search-input" class="form-label" style="font-size: var(--font-size-xs); font-weight: 600;">
+          Vehicle Registration Number
+        </label>
+        <form id="vehicle-search-form" class="flex flex-col sm:flex-row gap-2" style="margin-top: 4px;">
+          <input
+            type="text"
+            id="vehicle-search-input"
+            class="form-input font-mono uppercase"
+            placeholder="e.g. CW-4482"
+            style="flex: 1;"
+          >
+          <button type="submit" class="btn btn-secondary">
+            Search
+          </button>
+          <button type="button" id="vehicle-search-clear-btn" class="btn btn-outline">
+            Clear
+          </button>
+        </form>
+        <div id="vehicle-search-error" class="alert alert-danger" style="display: none; margin-top: 8px; margin-bottom: 0; padding: 6px 10px; font-size: 11px;"></div>
+        <p class="text-muted" style="font-size: 11px; margin-top: 6px; margin-bottom: 0;">
+          Tip: You can search your registered vehicle (e.g. <strong>CW-4482</strong>) or any currently parked student bike.
+        </p>
+      </div>
+
+      <!-- Vehicle Locator Dynamic Container -->
+      <div id="vehicle-locator-container">
+        <!-- Populated by JavaScript -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Application Logic -->
+  <script src="../dist/find-vehicle.bundle.js"></script>
+</body>
+</html>

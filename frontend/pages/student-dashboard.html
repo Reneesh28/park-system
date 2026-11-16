@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Student Dashboard - ParkWise</title>
+  
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <!-- Header / Navbar injected by JavaScript -->
+  <div id="navbar-container"></div>
+
+  <div class="dashboard-container">
+    <!-- Sidebar / Mobile Subnav injected by JavaScript -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-main">
+      <!-- Welcome Header -->
+      <div class="dashboard-header flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <h2>Dashboard Overview</h2>
+          <p class="text-muted" style="margin-bottom: 0; font-size: var(--font-size-xs);">
+            Welcome, <strong id="user-name">Student</strong> &bull; ID: <span id="user-student-id" class="font-mono text-primary">--</span> &bull; <span id="current-date">--</span>
+          </p>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap">
+          <a href="./scan-parking.html" class="btn btn-primary btn-sm">
+            Scan QR Code
+          </a>
+          <a href="./campus-map.html" class="btn btn-secondary btn-sm">
+            Campus Map
+          </a>
+          <a href="./parking-lots.html" class="btn btn-outline btn-sm">
+            Find Parking
+          </a>
+        </div>
+      </div>
+
+      <!-- Active Parking Session Banner (Hidden when no active session) -->
+      <div id="active-session-banner" class="active-session-banner" style="display: none;"></div>
+
+      <!-- Top 4 Statistics Grid (Matching Reference) -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-card-title">Total Campus Bays</span>
+            <span class="text-navy" id="stat-icon-total">TOTAL</span>
+          </div>
+          <div class="stat-card-value text-navy" id="stat-total-capacity">330</div>
+          <div class="stat-card-subtitle" id="stat-total-capacity-sub">Across 3 two-wheeler zones</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-card-title">Available To Park</span>
+            <span class="text-success" id="stat-icon-available">FREE</span>
+          </div>
+          <div class="stat-card-value text-success" id="stat-available-spaces">--</div>
+          <div class="stat-card-subtitle" id="stat-available-sub">Ready for check-in</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-card-title">Current Occupancy</span>
+            <span class="text-teal" id="stat-icon-occupancy">RATE</span>
+          </div>
+          <div class="stat-card-value text-teal" id="stat-occupancy-rate">--%</div>
+          <div class="stat-card-subtitle" id="stat-active-session-sub">Overall campus load</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-card-title">Reward Points</span>
+            <span class="text-accent" id="stat-icon-reward">PTS</span>
+          </div>
+          <div class="stat-card-value text-accent" id="stat-reward-points">-- pts</div>
+          <div class="stat-card-subtitle">
+            <span id="stat-active-session" style="display:none;">Ready</span>
+            <span id="stat-total-sessions" style="display:none;">0</span>
+            Available to redeem
+          </div>
+        </div>
+      </div>
+
+      <!-- Occupancy Gauge & Zone-wise Availability Progress Bars (Reference Style) -->
+      <div class="grid grid-cols-3 gap-4" style="margin-bottom: var(--space-6);">
+        <!-- Circular Donut Occupancy Gauge -->
+        <div class="card flex flex-col justify-between" style="padding: var(--space-4);">
+          <div class="font-semibold text-navy" style="font-size: var(--font-size-sm); margin-bottom: var(--space-2);">
+            Campus Occupancy Gauge
+          </div>
+          <div class="flex items-center justify-center" style="padding: var(--space-2) 0;">
+            <svg viewBox="0 0 140 140" width="140" height="140">
+              <circle cx="70" cy="70" r="52" fill="none" stroke="#e2e8f0" stroke-width="14" />
+              <circle
+                id="donut-progress-ring"
+                cx="70" cy="70" r="52"
+                fill="none"
+                stroke="#0F9D9A"
+                stroke-width="14"
+                stroke-linecap="round"
+                stroke-dasharray="326.7 326.7"
+                stroke-dashoffset="100"
+                transform="rotate(-90 70 70)"
+                style="transition: stroke-dashoffset 400ms ease;"
+              />
+              <text id="donut-percent-text" x="70" y="76" text-anchor="middle" font-size="24" font-weight="700" fill="#0B2447">--%</text>
+            </svg>
+          </div>
+          <div class="text-center text-xs text-muted" id="donut-details-text">
+            Calculating campus slots...
+          </div>
+        </div>
+
+        <!-- Zone-Wise Availability Bars -->
+        <div class="card" style="grid-column: span 2; padding: var(--space-4);">
+          <div class="flex items-center justify-between" style="margin-bottom: var(--space-3);">
+            <div class="font-semibold text-navy" style="font-size: var(--font-size-sm);">
+              Zone-Wise Real-Time Availability
+            </div>
+            <a href="./parking-lots.html" class="text-xs text-teal font-semibold">View All Lots &rarr;</a>
+          </div>
+          <div id="zonewise-bars-container" class="flex flex-col gap-3">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive SVG Campus Map Section -->
+      <section style="margin-bottom: var(--space-6);">
+        <div class="flex items-center justify-between flex-wrap gap-2" style="margin-bottom: var(--space-3);">
+          <div>
+            <h3 style="margin-bottom: 2px;">Campus Parking Map Preview</h3>
+            <p class="text-muted" style="margin-bottom: 0; font-size: var(--font-size-xs);">
+              Click any parking zone to inspect live availability, or open the full campus map view.
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <a href="./campus-map.html" class="btn btn-secondary btn-sm">
+              Open Full Interactive Map &rarr;
+            </a>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-4" style="align-items: start;">
+          <div class="card" style="grid-column: span 2; padding: var(--space-3);">
+            <div id="dashboard-campus-map-container">
+              <!-- Injected by campus-map.component.js -->
+            </div>
+          </div>
+
+          <!-- Dynamic Lot Details Panel on Map Click -->
+          <div class="card flex flex-col justify-between" id="dashboard-map-lot-details" style="padding: var(--space-4); min-height: 280px;">
+            <!-- Populated dynamically when a lot is clicked on the map -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Smart Parking Recommendation Section -->
+      <section style="margin-bottom: var(--space-6);">
+        <div class="flex items-center justify-between flex-wrap gap-3" style="margin-bottom: var(--space-3);">
+          <div>
+            <h3 style="margin-bottom: 2px;">Smart Parking Recommendation</h3>
+            <p class="text-muted" style="margin-bottom: 0; font-size: var(--font-size-xs);">
+              Algorithmic ranking ($S = 0.6A + 0.4D$) minimizing walk distance and congestion.
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <label for="destination-select" style="font-size: var(--font-size-xs); font-weight: var(--font-weight-medium); white-space: nowrap;">
+              Destination:
+            </label>
+            <select id="destination-select" class="form-input form-select" style="min-width: 190px; padding: 4px 8px; font-size: var(--font-size-xs);">
+              <!-- Options populated by JS -->
+            </select>
+          </div>
+        </div>
+
+        <div id="recommendation-card-container">
+          <!-- Populated by JavaScript -->
+        </div>
+      </section>
+
+      <!-- Recent Activity Section -->
+      <section>
+        <div class="flex items-center justify-between" style="margin-bottom: var(--space-3);">
+          <div>
+            <h3 style="margin-bottom: 2px;">Recent Parking Activity</h3>
+            <p class="text-muted" style="margin-bottom: 0; font-size: var(--font-size-xs);">
+              Your verified campus check-ins and reward point earnings.
+            </p>
+          </div>
+          <a href="./parking-history.html" class="btn btn-outline btn-sm" style="font-size: var(--font-size-xs); padding: 3px 8px;">
+            Full History &rarr;
+          </a>
+        </div>
+
+        <div class="card" style="padding: 0; overflow: hidden;">
+          <div id="recent-activity-container">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Application Logic -->
+  <script src="../dist/student-dashboard.bundle.js"></script>
+</body>
+</html>

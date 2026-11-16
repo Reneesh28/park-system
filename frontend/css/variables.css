@@ -1,0 +1,150 @@
+/**
+ * PARKWISE - Central Design Tokens & CSS Variables
+ * Enhanced with ParkSmart Navy & Teal Visual Reference
+ */
+
+:root {
+  /* ==========================================================================
+     Color Palette (Navy & Teal Campus Palette)
+     ========================================================================== */
+  
+  /* Primary Brand (Deep Campus Navy) */
+  --color-primary: #0B2447;            /* Deep Navy */
+  --color-primary-hover: #15356a;      /* Navy 700 */
+  --color-primary-active: #07172f;     /* Navy 900 */
+  --color-primary-light: #f0f4f9;      /* Navy 50 */
+  --color-primary-subtle: #dbe4ee;     /* Navy 100 */
+  --color-primary-border: #9fb0c4;     /* Navy 200 */
+
+  /* Secondary / Brand Accent (Luminous Teal) */
+  --color-secondary: #0F9D9A;          /* Teal */
+  --color-secondary-hover: #0c8381;    /* Teal 600 */
+  --color-secondary-active: #096866;   /* Teal 700 */
+  --color-secondary-light: #f0fdfc;    /* Teal 50 */
+  --color-secondary-subtle: #ccfbf7;   /* Teal 100 */
+  --color-secondary-border: #99f6ee;   /* Teal 200 */
+
+  /* Reward / Highlight Accent (Teal / Warm Gold) */
+  --color-accent: #0F9D9A;             /* Teal */
+  --color-accent-hover: #0c8381;
+  --color-accent-gold: #f59e0b;        /* Warm Gold for reward points */
+  --color-accent-gold-light: #fffbeb;
+  --color-accent-gold-border: #fde68a;
+
+  /* Semantic Feedback Colors (Matching Reference) */
+  --color-success: #16a34a;            /* Green 600 - Available */
+  --color-success-hover: #15803d;
+  --color-success-bg: #ecfdf5;         /* Emerald 50 */
+  --color-success-text: #047857;       /* Emerald 700 */
+  --color-success-border: #a7f3d0;     /* Emerald 200 */
+
+  --color-warning: #f59e0b;            /* Amber 500 - Limited */
+  --color-warning-hover: #d97706;
+  --color-warning-bg: #fffbeb;         /* Amber 50 */
+  --color-warning-text: #b45309;       /* Amber 700 */
+  --color-warning-border: #fde68a;     /* Amber 200 */
+
+  --color-danger: #dc2626;             /* Red 600 - Full */
+  --color-danger-hover: #b91c1c;
+  --color-danger-bg: #fef2f2;          /* Red 50 */
+  --color-danger-text: #b91c1c;        /* Red 700 */
+  --color-danger-border: #fecaca;      /* Red 200 */
+
+  --color-info: #2563eb;               /* Blue 600 - Route / Selected */
+  --color-info-hover: #1d4ed8;
+  --color-info-bg: #eff6ff;            /* Blue 50 */
+  --color-info-text: #1d4ed8;          /* Blue 700 */
+  --color-info-border: #bfdbfe;        /* Blue 200 */
+
+  /* Neutral Surface & Backgrounds */
+  --color-bg-base: #f4f6f9;            /* Crisp modern canvas */
+  --color-bg-surface: #ffffff;         /* Pure white cards/modals */
+  --color-bg-subtle: #f8fafc;          /* Slate 50 inputs/tables */
+  --color-bg-alt: #f1f5f9;             /* Slate 100 panels */
+  --color-bg-elevated: #ffffff;        /* Modals and popovers */
+  --color-bg-dark: #0B2447;            /* Deep Navy for sidebar & dark headers */
+
+  /* Typography Colors */
+  --color-text-main: #0f172a;          /* Slate 900 high contrast */
+  --color-text-muted: #64748b;         /* Slate 500 secondary labels */
+  --color-text-subtle: #94a3b8;        /* Slate 400 helper notes */
+  --color-text-inverse: #ffffff;       /* Pure white on dark surfaces */
+
+  /* Borders & Dividers */
+  --color-border: #e2e8f0;             /* Slate 200 clean borders */
+  --color-border-subtle: #f1f5f9;      /* Slate 100 inner dividers */
+  --color-border-focus: #0F9D9A;       /* Teal focus outline */
+
+  /* ==========================================================================
+     Typography
+     ========================================================================== */
+  --font-family-base: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-md: 1.125rem;   /* 18px */
+  --font-size-lg: 1.25rem;    /* 20px */
+  --font-size-xl: 1.5rem;     /* 24px */
+  --font-size-2xl: 1.875rem;  /* 30px */
+  --font-size-3xl: 2.25rem;   /* 36px */
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* ==========================================================================
+     Spacing & Layout
+     ========================================================================== */
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+
+  --max-content-width: 1280px;
+  --max-form-width: 480px;
+  --header-height: 3.5rem;     /* 56px (matching reference h-14) */
+  --sidebar-width: 15rem;      /* 240px (matching reference w-60) */
+
+  /* ==========================================================================
+     Border Radii & Elevation (Rounded-xl modern feel)
+     ========================================================================== */
+  --radius-xs: 0.25rem; /* 4px */
+  --radius-sm: 0.375rem;/* 6px */
+  --radius-md: 0.5rem;  /* 8px */
+  --radius-lg: 0.75rem; /* 12px (rounded-xl) */
+  --radius-xl: 1rem;    /* 16px */
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Z-Index Hierarchy */
+  --z-base: 1;
+  --z-sticky: 30;
+  --z-sidebar: 40;
+  --z-overlay: 50;
+  --z-modal: 60;
+  --z-toast: 70;
+}

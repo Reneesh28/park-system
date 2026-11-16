@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Map - ParkWise</title>
+  
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <!-- Header / Navbar injected by JavaScript -->
+  <div id="navbar-container"></div>
+
+  <div class="dashboard-container">
+    <!-- Sidebar / Mobile Subnav injected by JavaScript -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-main">
+      <!-- Page Header -->
+      <div class="dashboard-header flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <h2>Interactive Campus Parking Map</h2>
+          <p class="text-muted" style="margin-bottom: 0; font-size: var(--font-size-xs);">
+            Explore university two-wheeler parking zones, live availability, and walking routes.
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="./scan-parking.html" class="btn btn-primary btn-sm">
+            Scan QR to Park
+          </a>
+          <a href="./parking-lots.html" class="btn btn-outline btn-sm">
+            Lot List View
+          </a>
+        </div>
+      </div>
+
+      <!-- Destination Block Selector Bar -->
+      <div class="card flex items-center justify-between flex-wrap gap-3" style="padding: var(--space-3) var(--space-4); margin-bottom: var(--space-4);">
+        <div class="flex items-center gap-2">
+          <label for="map-destination-select" style="font-size: var(--font-size-xs); font-weight: 600; color: var(--color-primary); white-space: nowrap;">
+            Destination Academic Block:
+          </label>
+          <select id="map-destination-select" class="form-input form-select" style="min-width: 200px; padding: 4px 8px; font-size: var(--font-size-xs);">
+            <!-- Options populated by JS -->
+          </select>
+        </div>
+        <div class="flex items-center gap-3 text-xs text-muted">
+          <span>Click any parking lot on the map to focus and inspect details.</span>
+        </div>
+      </div>
+
+      <!-- Main Map & Lot Details Grid -->
+      <div class="grid grid-cols-3 gap-4" style="align-items: start; margin-bottom: var(--space-6);">
+        <!-- Interactive Map Canvas (Spans 2 columns on desktop) -->
+        <div class="card" style="grid-column: span 2; padding: var(--space-3);">
+          <div id="full-campus-map-container">
+            <!-- Injected by campus-map.component.js -->
+          </div>
+        </div>
+
+        <!-- Selected Parking Lot Details Panel -->
+        <div class="card flex flex-col justify-between" id="map-lot-details-card" style="padding: var(--space-5);">
+          <!-- Populated dynamically by campus-map.page.js -->
+        </div>
+      </div>
+
+      <!-- Campus Zone Summary Table -->
+      <div class="card" style="padding: var(--space-4);">
+        <div class="flex items-center justify-between" style="margin-bottom: var(--space-3);">
+          <h3 style="font-size: var(--font-size-sm); margin-bottom: 0;">Campus Parking Zone Summary</h3>
+          <span class="badge badge-success font-mono" style="font-size: 11px;">3 University Lots Active</span>
+        </div>
+        <div id="map-lots-summary-table">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Application Logic -->
+  <script src="../dist/campus-map.bundle.js"></script>
+</body>
+</html>

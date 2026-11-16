@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Parking History - ParkWise</title>
+  
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <!-- Header / Navbar injected by JavaScript -->
+  <div id="navbar-container"></div>
+
+  <div class="dashboard-container">
+    <!-- Sidebar / Mobile Subnav injected by JavaScript -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-main">
+      <div class="dashboard-header flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <h2>Parking Session History</h2>
+          <p class="text-muted" style="margin-bottom: 0; font-size: var(--font-size-xs);">
+            Review past parking sessions, duration timestamps, and points earned.
+          </p>
+        </div>
+        <a href="./scan-parking.html" class="btn btn-primary btn-sm">
+          New Parking Session
+        </a>
+      </div>
+
+      <!-- History Summary Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-title">Total Trips Recorded</div>
+          <div class="stat-card-value text-navy" id="stat-history-total">--</div>
+          <div class="stat-card-subtitle">Lifetime campus parkings</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-title">Completed Trips</div>
+          <div class="stat-card-value text-success" id="stat-history-completed">--</div>
+          <div class="stat-card-subtitle">Safely checked out</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-title">Active Parkings</div>
+          <div class="stat-card-value text-navy" id="stat-history-active">--</div>
+          <div class="stat-card-subtitle">Currently parked bays</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-title">Total Points Earned</div>
+          <div class="stat-card-value text-accent" id="stat-history-points">-- pts</div>
+          <div class="stat-card-subtitle">Accumulated through parking</div>
+        </div>
+      </div>
+
+      <!-- Filter Controls & Table Card -->
+      <div class="card" style="padding: 0; overflow: hidden;">
+        <div class="flex items-center justify-between flex-wrap gap-2" style="padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--color-border); background: #ffffff;">
+          <h3 style="margin-bottom: 0; font-size: var(--font-size-sm); color: var(--color-primary);">Session Records</h3>
+          <div class="flex items-center gap-1.5">
+            <span class="text-muted" style="font-size: 11px;">Filter:</span>
+            <button class="btn btn-primary btn-sm history-filter-btn active" data-filter="all" style="padding: 3px 8px; font-size: 11px;">All</button>
+            <button class="btn btn-outline btn-sm history-filter-btn" data-filter="completed" style="padding: 3px 8px; font-size: 11px;">Completed</button>
+            <button class="btn btn-outline btn-sm history-filter-btn" data-filter="active" style="padding: 3px 8px; font-size: 11px;">Active</button>
+          </div>
+        </div>
+
+        <div id="parking-history-table-container">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Application Logic -->
+  <script src="../dist/parking-history.bundle.js"></script>
+</body>
+</html>

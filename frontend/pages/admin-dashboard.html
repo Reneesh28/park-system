@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Admin Dashboard & Analytics - ParkWise</title>
+  
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <!-- Header / Navbar injected by JavaScript -->
+  <div id="navbar-container"></div>
+
+  <div class="dashboard-container">
+    <!-- Sidebar / Mobile Subnav injected by JavaScript -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-main">
+      <div class="dashboard-header flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <div class="flex items-center gap-2" style="margin-bottom: 2px;">
+            <h2>Campus Parking Administration</h2>
+            <span class="badge badge-warning" style="font-size: 10px;">Admin Console</span>
+          </div>
+          <p class="text-muted" style="margin-bottom: 0; font-size: var(--font-size-xs);">
+            Real-time university occupancy monitoring, capacity controls, simulation triggers, and audit feeds.
+          </p>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap">
+          <button id="sim-enter-btn" class="btn btn-secondary btn-sm">
+            + Simulate Entry
+          </button>
+          <button id="sim-exit-btn" class="btn btn-primary btn-sm">
+            - Simulate Exit
+          </button>
+          <button id="reset-demo-data-btn" class="btn btn-outline btn-sm" style="border-color: var(--color-danger); color: var(--color-danger);">
+            Reset Demo Data
+          </button>
+        </div>
+      </div>
+
+      <!-- Campus Overview Statistics Grid -->
+      <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));">
+        <div class="stat-card">
+          <div class="stat-card-title">Total Campus Capacity</div>
+          <div class="stat-card-value text-navy" id="stat-admin-capacity">330</div>
+          <div class="stat-card-subtitle">Across 3 university lots</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-title">Current Occupied</div>
+          <div class="stat-card-value text-danger" id="stat-admin-occupied">--</div>
+          <div class="stat-card-subtitle">Two-wheelers parked</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-title">Available Spaces</div>
+          <div class="stat-card-value text-success" id="stat-admin-available">--</div>
+          <div class="stat-card-subtitle">Open parking bays</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-title">Campus Utilization</div>
+          <div class="stat-card-value text-teal" id="stat-admin-utilization">--%</div>
+          <div class="stat-card-subtitle">Aggregate university load</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-title">Active Sessions</div>
+          <div class="stat-card-value text-navy" id="stat-admin-active-sessions">--</div>
+          <div class="stat-card-subtitle">Live tracked vehicles</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-title">Points Distributed</div>
+          <div class="stat-card-value text-success" id="stat-admin-points-distributed">-- pts</div>
+          <div class="stat-card-subtitle">Incentives awarded</div>
+        </div>
+      </div>
+
+      <!-- Interactive Campus Map Section in Admin View -->
+      <div class="card" style="margin-bottom: var(--space-4); padding: var(--space-3);">
+        <div class="flex items-center justify-between" style="margin-bottom: var(--space-2);">
+          <div class="font-semibold text-navy flex items-center gap-2" style="font-size: var(--font-size-xs);">
+            <span>Live Campus Map Overview</span>
+            <span class="badge badge-success" style="font-size: 10px;">Synced</span>
+          </div>
+          <span class="text-muted" style="font-size: 11px;">Real-time zone status updates</span>
+        </div>
+        <div id="admin-campus-map-container">
+          <!-- Injected by campus-map.component.js -->
+        </div>
+      </div>
+
+      <!-- Real-Time Lot Occupancy Management Table -->
+      <section style="margin-bottom: var(--space-6);">
+        <div class="flex items-center justify-between" style="margin-bottom: var(--space-2);">
+          <div>
+            <h3 style="margin-bottom: 2px;">Parking Lot Capacity &amp; Zones</h3>
+            <p class="text-muted" style="margin-bottom: 0; font-size: var(--font-size-xs);">
+              Configure maximum zone capacity and operational status.
+            </p>
+          </div>
+        </div>
+
+        <div class="card" style="padding: 0; overflow: hidden;">
+          <div id="admin-lots-table-container">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Live Sessions Feed Table -->
+      <section>
+        <div class="flex items-center justify-between flex-wrap gap-2" style="margin-bottom: var(--space-2);">
+          <div>
+            <h3 style="margin-bottom: 2px;">Live Campus Sessions Feed</h3>
+            <p class="text-muted" style="margin-bottom: 0; font-size: var(--font-size-xs);">
+              Recent student vehicle check-ins, check-outs, and reward events.
+            </p>
+          </div>
+          <input
+            type="text"
+            id="admin-session-search-input"
+            class="form-input"
+            placeholder="Filter sessions by plate or lot..."
+            style="max-width: 240px; padding: 4px 8px; font-size: var(--font-size-xs);"
+          >
+        </div>
+
+        <div class="card" style="padding: 0; overflow: hidden;">
+          <div id="admin-sessions-feed-container">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Application Logic -->
+  <script src="../dist/admin-dashboard.bundle.js"></script>
+</body>
+</html>

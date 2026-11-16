@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Profile - ParkWise</title>
+  
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <div class="dashboard-container">
+    <div id="sidebar-container"></div>
+
+    <main class="dashboard-main">
+      <div class="dashboard-header flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <h2>Student Profile &amp; Mobility Account</h2>
+          <p class="text-muted" style="margin-bottom: 0; font-size: var(--font-size-xs);">
+            Manage your registered two-wheeler, student credentials, and reward wallet.
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="./scan-parking.html" class="btn btn-primary btn-sm">
+            Scan QR to Park
+          </a>
+          <button id="profile-logout-btn" class="btn btn-outline btn-sm" style="color: var(--color-danger); border-color: var(--color-danger);">
+            Sign Out
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-4" style="margin-bottom: var(--space-6);">
+        <!-- Student Info Card -->
+        <div class="card flex flex-col justify-between" style="padding: var(--space-5);">
+          <div>
+            <div class="flex items-center gap-3" style="margin-bottom: var(--space-4);">
+              <div style="width: 52px; height: 52px; border-radius: 50%; background: #0B2447; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700;">
+                <span id="profile-initials">AR</span>
+              </div>
+              <div>
+                <h3 id="profile-full-name" style="margin-bottom: 2px;">Alex Rivera</h3>
+                <span class="badge badge-secondary font-mono" id="profile-role-badge">Student</span>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-2 text-xs" style="margin-bottom: var(--space-4);">
+              <div class="flex justify-between">
+                <span class="text-muted">Student ID:</span>
+                <strong class="font-mono" id="profile-student-id">2024-STU-8821</strong>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-muted">Campus Email:</span>
+                <span id="profile-email">student@university.edu</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-muted">Status:</span>
+                <span class="badge badge-success">Active &bull; Verified</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="padding: var(--space-3); background: #f8fafc; border: 1px solid var(--color-border);">
+            <div style="font-size: 11px; color: var(--color-text-muted); margin-bottom: 2px;">ParkWise Wallet</div>
+            <div class="font-semibold text-accent" style="font-size: 1.25rem;" id="profile-wallet-balance">350 pts</div>
+            <a href="./rewards.html" class="text-xs text-teal font-semibold" style="margin-top: 4px; display: inline-block;">Redeem Vouchers &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Registered Vehicle Card -->
+        <div class="card" style="padding: var(--space-5); grid-column: span 2;">
+          <div class="flex items-center justify-between" style="margin-bottom: var(--space-4);">
+            <h3 style="margin-bottom: 0;">Registered Vehicle</h3>
+            <span class="badge badge-success">Primary Vehicle</span>
+          </div>
+
+          <div class="card" style="padding: var(--space-4); background: #f0fdfa; border: 1px solid #ccfbf1; margin-bottom: var(--space-4);">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <div>
+                <div style="font-size: 11px; color: #0d9488; text-transform: uppercase; font-weight: 600;">Two-Wheeler Plate</div>
+                <div class="font-mono font-bold text-navy" style="font-size: 1.5rem;" id="profile-plate-number">PB08-AX-9941</div>
+                <div class="text-muted text-xs" style="margin-top: 2px;">Campus Parking Permit: Verified</div>
+              </div>
+              <span class="badge badge-accent">Authorized</span>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2 text-xs text-muted">
+            <div>&bull; Used automatically when scanning entrance and exit parking lot QR codes.</div>
+            <div>&bull; Eligible for underutilized lot incentive bonuses (+20 points per session).</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Navigation Shortcuts -->
+      <div class="card" style="padding: var(--space-4);">
+        <h3 style="font-size: var(--font-size-sm); margin-bottom: var(--space-3);">Campus Mobility Shortcuts</h3>
+        <div class="grid grid-cols-4 gap-3">
+          <a href="./campus-map.html" class="btn btn-outline text-center" style="font-size: var(--font-size-xs);">
+            Campus Map
+          </a>
+          <a href="./parking-lots.html" class="btn btn-outline text-center" style="font-size: var(--font-size-xs);">
+            Find Parking
+          </a>
+          <a href="./find-vehicle.html" class="btn btn-outline text-center" style="font-size: var(--font-size-xs);">
+            My Parking
+          </a>
+          <a href="./parking-history.html" class="btn btn-outline text-center" style="font-size: var(--font-size-xs);">
+            Parking History
+          </a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+  <script src="../dist/profile.bundle.js"></script>
+</body>
+</html>

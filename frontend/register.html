@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Registration - ParkWise</title>
+  
+  <link rel="stylesheet" href="./css/variables.css">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/auth.css">
+  <link rel="stylesheet" href="./css/responsive.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="container flex items-center justify-between">
+      <a href="./index.html" class="navbar-brand">
+        <span style="font-size: 1.1rem; font-weight: 700; color: var(--color-teal);">[PARKWISE]</span>
+        <span>ParkWise</span>
+      </a>
+      <div>
+        <a href="./login.html" class="btn btn-outline btn-sm">Sign In</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Registration View -->
+  <main class="app-main auth-wrapper">
+    <div class="auth-card auth-card-wide">
+      <div class="auth-header">
+        <h1>Student Registration</h1>
+        <p>Register your two-wheeler vehicle for smart allocation &amp; campus reward points</p>
+      </div>
+
+      <div id="error-container" class="alert alert-danger" style="display: none;"></div>
+
+      <form id="register-form" class="auth-form" novalidate>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="form-group">
+            <label class="form-label" for="full-name">Full Name *</label>
+            <input class="form-control" type="text" id="full-name" placeholder="Alex Rivera" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="student-id">Student ID / Matriculation *</label>
+            <input class="form-control" type="text" id="student-id" placeholder="STU-2026-XXXX" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Campus Email Address *</label>
+          <input class="form-control" type="email" id="email" placeholder="student@campus.edu" required>
+          <div class="form-helper">Must be a valid institutional university address</div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="form-group">
+            <label class="form-label" for="password">Password *</label>
+            <input class="form-control" type="password" id="password" placeholder="••••••••" required>
+            <div class="form-helper">Min 8 chars, 1 digit, 1 letter</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="confirm-password">Confirm Password *</label>
+            <input class="form-control" type="password" id="confirm-password" placeholder="••••••••" required>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="form-group">
+            <label class="form-label" for="vehicle-number">Vehicle Registration / Plate *</label>
+            <input class="form-control font-mono" type="text" id="vehicle-number" placeholder="CW-4482" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="vehicle-type">Vehicle Type *</label>
+            <select class="form-select" id="vehicle-type">
+              <option value="two-wheeler" selected>Motorcycle / Scooter (Two-Wheeler)</option>
+              <option value="bicycle">Electric Bicycle / Moped</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-bottom: var(--space-5);">
+          <label style="display: flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-xs); color: var(--color-text-muted); cursor: pointer;">
+            <input type="checkbox" id="primary-vehicle" checked disabled>
+            <span>Set as primary commuter vehicle for QR check-in</span>
+          </label>
+        </div>
+
+        <button type="submit" id="submit-btn" class="btn btn-primary btn-block btn-lg">
+          Complete Registration
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <p>Already have an account? <a href="./login.html">Sign in here</a></p>
+        <p style="margin-top: var(--space-2);"><a href="./index.html">&larr; Return to Overview Portal</a></p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer text-center">
+    <div class="container">
+      ParkWise &bull; Smart Campus Two-Wheeler Parking Management
+    </div>
+  </footer>
+
+  <script src="dist/register.bundle.js"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - ParkWise Smart Campus Parking</title>
+  
+  <link rel="stylesheet" href="./css/variables.css">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/auth.css">
+  <link rel="stylesheet" href="./css/responsive.css">
+</head>
+<body>
+  <!-- Global Header -->
+  <header class="app-header">
+    <div class="container flex items-center justify-between">
+      <a href="./index.html" class="navbar-brand">
+        <span style="font-size: 1.1rem; font-weight: 700; color: var(--color-teal);">[PARKWISE]</span>
+        <span>ParkWise</span>
+      </a>
+      <div>
+        <a href="./register.html" class="btn btn-outline btn-sm">Create Account</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Login View -->
+  <main class="app-main auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h1>Welcome Back</h1>
+        <p>Sign in to manage two-wheeler parking and claim reward points</p>
+      </div>
+
+      <!-- Quick 1-Click Demo Evaluation Buttons -->
+      <div style="background-color: var(--color-bg-subtle); padding: var(--space-3); border-radius: var(--radius-lg); margin-bottom: var(--space-5);">
+        <div style="font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); text-transform: uppercase; color: var(--color-text-muted); margin-bottom: var(--space-2);">
+          Instant Demo Credentials
+        </div>
+        <div class="demo-account-buttons" style="margin-bottom: 0;">
+          <button type="button" id="demo-student-btn" class="btn btn-outline btn-sm flex-1">
+            Student Demo
+          </button>
+          <button type="button" id="demo-admin-btn" class="btn btn-outline btn-sm flex-1">
+            Admin Demo
+          </button>
+        </div>
+      </div>
+
+      <!-- Error Feedback Box -->
+      <div id="error-container" class="alert alert-danger" style="display: none;"></div>
+
+      <form id="login-form" class="auth-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="email">Campus Email Address</label>
+          <input
+            class="form-control"
+            type="email"
+            id="email"
+            name="email"
+            placeholder="student@campus.edu"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <div class="flex items-center justify-between">
+            <label class="form-label" for="password">Password</label>
+            <small><a href="#" onclick="alert('Demo password for Alex Rivera: StudentPass123\nAdmin: AdminPass123'); return false;">Forgot?</a></small>
+          </div>
+          <div class="input-password-wrapper">
+            <input
+              class="form-control"
+              type="password"
+              id="password"
+              name="password"
+              placeholder="••••••••"
+              autocomplete="current-password"
+              required
+            >
+            <button type="button" id="toggle-password" class="input-password-toggle" aria-label="Toggle password visibility">
+              Show
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between" style="margin-bottom: var(--space-5);">
+          <label style="display: flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-sm); cursor: pointer;">
+            <input type="checkbox" id="remember-me" checked>
+            <span>Remember this device</span>
+          </label>
+        </div>
+
+        <button type="submit" id="submit-btn" class="btn btn-primary btn-block btn-lg">
+          Sign In
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <p>New to campus? <a href="./register.html">Register your two-wheeler here</a></p>
+        <p style="margin-top: var(--space-2);"><a href="./index.html">&larr; Return to Overview Portal</a></p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer text-center">
+    <div class="container">
+      ParkWise &bull; Smart Campus Two-Wheeler Parking Management
+    </div>
+  </footer>
+
+  <script src="dist/login.bundle.js"></script>
+</body>
+</html>

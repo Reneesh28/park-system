@@ -1,0 +1,83 @@
+/**
+ * PARKWISE - Authentication View Styles
+ * Visual Reference: ParkSmart Navy & Teal Authentication Screen
+ */
+
+.auth-wrapper {
+  min-height: calc(100vh - var(--header-height) - 4rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4);
+  background-color: var(--color-bg-base);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-6);
+}
+
+.auth-card-wide {
+  max-width: 540px;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: var(--space-5);
+}
+
+.auth-header h1 {
+  font-size: var(--font-size-2xl);
+  color: var(--color-primary);
+  margin-bottom: var(--space-1);
+}
+
+.auth-header p {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  margin-bottom: 0;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-password-wrapper input {
+  padding-right: 2.5rem;
+}
+
+.input-password-toggle {
+  position: absolute;
+  right: 0.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+  color: var(--color-text-muted);
+}
+
+.demo-account-buttons {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.auth-footer {
+  margin-top: var(--space-5);
+  text-align: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}

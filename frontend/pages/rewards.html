@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Rewards &amp; Perks - ParkWise</title>
+  
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <!-- Header / Navbar injected by JavaScript -->
+  <div id="navbar-container"></div>
+
+  <div class="dashboard-container">
+    <!-- Sidebar / Mobile Subnav injected by JavaScript -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-main">
+      <div class="dashboard-header flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <h2>Student Rewards &amp; Campus Perks</h2>
+          <p class="text-muted" style="margin-bottom: 0; font-size: var(--font-size-xs);">
+            Earn bonus points by choosing underutilised campus zones and exchange them for cafeteria and bookstore perks.
+          </p>
+        </div>
+        <a href="./scan-parking.html" class="btn btn-primary btn-sm">
+          Park &amp; Earn Points
+        </a>
+      </div>
+
+      <!-- Rewards Summary Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-title">Current Points Balance</div>
+          <div class="stat-card-value text-accent" id="reward-balance-display">-- pts</div>
+          <div class="stat-card-subtitle">Available to redeem instantly</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-title">Lifetime Earned</div>
+          <div class="stat-card-value text-success" id="reward-lifetime-display">-- pts</div>
+          <div class="stat-card-subtitle">All-time university points</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-title">Underutilised Lot Uses</div>
+          <div class="stat-card-value text-primary" id="reward-underutilized-count">-- times</div>
+          <div class="stat-card-subtitle">Green campus contributor</div>
+        </div>
+      </div>
+
+      <!-- How Rewards Work Explainer Card (Reference Theme) -->
+      <div class="card" style="margin-bottom: var(--space-4); padding: var(--space-4); background: #f0fdfc; border: 1px solid var(--color-border); border-left: 4px solid var(--color-secondary);">
+        <h4 style="margin-bottom: 6px; color: var(--color-primary); font-size: var(--font-size-sm);">How ParkWise Rewards Work</h4>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-3); font-size: var(--font-size-xs);">
+          <div>
+            <strong class="text-navy">1. Standard Check-In (+10 Pts)</strong>
+            <p class="text-muted" style="margin-bottom: 0; font-size: 11px;">Every verified two-wheeler parking check-in earns 10 base points.</p>
+          </div>
+          <div>
+            <strong class="text-teal">2. Underutilised Bonus (+20 Pts)</strong>
+            <p class="text-muted" style="margin-bottom: 0; font-size: 11px;">Check into lots with &gt;60% open capacity to earn 2x bonus points and balance campus traffic.</p>
+          </div>
+          <div>
+            <strong class="text-navy">3. Redeem Campus Perks</strong>
+            <p class="text-muted" style="margin-bottom: 0; font-size: 11px;">Claim vouchers below and show the generated QR/promo code at university stores.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Catalog Section -->
+      <section style="margin-bottom: var(--space-6);">
+        <div style="margin-bottom: var(--space-3);">
+          <h3 style="margin-bottom: 2px;">Redemption Catalog</h3>
+          <p class="text-muted" style="margin-bottom: 0; font-size: var(--font-size-xs);">
+            Select any campus perk you are eligible for to generate your discount voucher.
+          </p>
+        </div>
+
+        <div id="rewards-catalog-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--space-4);">
+          <!-- Populated by JavaScript -->
+        </div>
+      </section>
+
+      <!-- Ledger Transaction History Section -->
+      <section>
+        <div style="margin-bottom: var(--space-3);">
+          <h3 style="margin-bottom: 2px;">Points Transaction History</h3>
+          <p class="text-muted" style="margin-bottom: 0; font-size: var(--font-size-xs);">
+            Complete record of points awarded for parking sessions and voucher redemptions.
+          </p>
+        </div>
+
+        <div class="card" style="padding: 0; overflow: hidden;">
+          <div id="reward-ledger-container">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Application Logic -->
+  <script src="../dist/rewards.bundle.js"></script>
+</body>
+</html>

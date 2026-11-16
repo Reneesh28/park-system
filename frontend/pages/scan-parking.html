@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scan Parking QR - ParkWise</title>
+  
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <!-- Header / Navbar injected by JavaScript -->
+  <div id="navbar-container"></div>
+
+  <div class="dashboard-container">
+    <!-- Sidebar injected by JavaScript -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-main">
+      <div class="dashboard-header flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <h2>QR Code Scanner</h2>
+          <p class="text-muted" style="margin-bottom: 0;">
+            Position your camera over the campus lot barcode to check in or out.
+          </p>
+        </div>
+        <button id="quick-checkout-action-btn" class="btn btn-accent" style="display: none;">
+          Check Out Active Session
+        </button>
+      </div>
+
+      <!-- Mode Status Banner (Dynamic) -->
+      <div id="scanner-mode-banner" class="alert alert-info" style="margin-bottom: var(--space-6);">
+        Checking session status...
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-6); align-items: start;">
+        <!-- Left Column: Scanner Viewport -->
+        <div class="card" style="padding: var(--space-5); text-align: center;">
+          <h3 style="margin-bottom: var(--space-2);">Camera Viewport</h3>
+          <p class="text-muted" style="font-size: var(--font-size-xs); margin-bottom: var(--space-4);">
+            Align the physical QR code within the target reticle.
+          </p>
+
+          <!-- Scanner Box Reticle -->
+          <div class="qr-scanner-viewport" style="position: relative; width: 100%; max-width: 340px; height: 320px; margin: 0 auto var(--space-4); background: #000000; border-radius: var(--radius-lg); overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-inner);">
+            <!-- Live camera video element -->
+            <video id="camera-stream" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover; display: none;"></video>
+
+            <!-- Placeholder overlay with animated laser -->
+            <div id="camera-placeholder" style="display: flex; flex-direction: column; align-items: center; justify-content: center; color: rgba(255, 255, 255, 0.7); width: 100%; height: 100%; padding: var(--space-4);">
+              <div class="empty-state-icon">[Scan QR]</div>
+              <div style="font-size: var(--font-size-sm); font-weight: var(--font-weight-medium);">Camera Viewport Ready</div>
+              <div style="font-size: var(--font-size-xs); opacity: 0.8; margin-top: var(--space-1);">Click below to activate webcam or use demo scan buttons</div>
+            </div>
+
+            <!-- QR Reticle Box Corners Overlay -->
+            <div style="position: absolute; width: 200px; height: 200px; border: 2px dashed rgba(255, 255, 255, 0.5); border-radius: var(--radius-md); pointer-events: none; display: flex; align-items: center; justify-content: center;">
+              <!-- Sweeping Laser Beam Animation -->
+              <div style="width: 100%; height: 2px; background: #22c55e; box-shadow: 0 0 10px #22c55e, 0 0 20px #22c55e; animation: laserSweep 2s ease-in-out infinite;"></div>
+            </div>
+          </div>
+
+          <style>
+            @keyframes laserSweep {
+              0% { transform: translateY(-90px); opacity: 0.3; }
+              50% { transform: translateY(90px); opacity: 1; }
+              100% { transform: translateY(-90px); opacity: 0.3; }
+            }
+          </style>
+
+          <button id="camera-toggle-btn" class="btn btn-outline btn-sm">
+            Start Live Camera
+          </button>
+        </div>
+
+        <!-- Right Column: Demo Controls and Manual Entry -->
+        <div class="flex flex-col gap-5">
+          <!-- 1-Click Fast Testing Controls -->
+          <div class="card" style="padding: var(--space-5);">
+            <h3 style="margin-bottom: var(--space-1);">One-Click Quick Scan</h3>
+            <p class="text-muted" style="font-size: var(--font-size-xs); margin-bottom: var(--space-4);">
+              Simulate physically scanning on-campus two-wheeler QR signs.
+            </p>
+
+            <div class="flex flex-col gap-3">
+              <button class="btn btn-outline demo-scan-btn flex items-center justify-between" data-lot-code="A" style="text-align: left; padding: var(--space-3) var(--space-4);">
+                <div>
+                  <strong>North Campus — Lot A</strong>
+                  <div class="text-muted font-mono" style="font-size: var(--font-size-xs);">PARKWISE-LOT-A</div>
+                </div>
+                <span class="badge badge-success">Scan QR &rarr;</span>
+              </button>
+
+              <button class="btn btn-outline demo-scan-btn flex items-center justify-between" data-lot-code="B" style="text-align: left; padding: var(--space-3) var(--space-4);">
+                <div>
+                  <strong>East Science Quad — Lot B</strong>
+                  <div class="text-muted font-mono" style="font-size: var(--font-size-xs);">PARKWISE-LOT-B</div>
+                </div>
+                <span class="badge badge-info">Scan QR &rarr;</span>
+              </button>
+
+              <button class="btn btn-outline demo-scan-btn flex items-center justify-between" data-lot-code="C" style="text-align: left; padding: var(--space-3) var(--space-4);">
+                <div>
+                  <strong>South Sports Complex — Lot C</strong>
+                  <div class="text-muted font-mono" style="font-size: var(--font-size-xs);">PARKWISE-LOT-C</div>
+                </div>
+                <span class="badge badge-accent">Scan QR &rarr;</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Manual Code Entry Fallback -->
+          <div class="card" style="padding: var(--space-5);">
+            <h3 style="margin-bottom: var(--space-1);">Manual Code Entry</h3>
+            <p class="text-muted" style="font-size: var(--font-size-xs); margin-bottom: var(--space-4);">
+              If your device camera is damaged or unable to focus, type the printed lot code.
+            </p>
+
+            <form id="manual-qr-form" class="flex flex-col gap-3">
+              <div class="form-group" style="margin-bottom: 0;">
+                <input
+                  type="text"
+                  id="manual-qr-input"
+                  class="form-input font-mono"
+                  placeholder="e.g. PARKWISE-LOT-A"
+                  required
+                >
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Submit Lot Code
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Application Logic -->
+  <script src="../dist/scan-parking.bundle.js"></script>
+</body>
+</html>
