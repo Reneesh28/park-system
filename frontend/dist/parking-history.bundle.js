@@ -290,6 +290,13 @@
       basePath = "../"
     } = {}) {
       storageService.ensureHydrated();
+      const existingUser = this.getUser();
+      if (existingUser && allowedRoles.includes(existingUser.role)) {
+        if (!storageService.get("auth_token")) {
+          storageService.set("auth_token", `demo-token-${existingUser.id}`);
+        }
+        return existingUser;
+      }
       if (!this.isAuthenticated()) {
         const users = storageService.get("users", []);
         const fallbackUser = users.find((u) => allowedRoles.includes(u.role)) || users[0];
@@ -907,6 +914,66 @@
     </aside>
   `;
   }
+  function renderAdminSidebar(activePage = "", basePath = "../") {
+    const items = [
+      { id: "admin-dashboard", label: "Admin Analytics", icon: "sliders", href: `${basePath}pages/admin-dashboard.html` },
+      { id: "parking-lots", label: "Campus Lots", icon: "parking", href: `${basePath}pages/parking-lots.html` },
+      { id: "campus-map", label: "Campus Map", icon: "map", href: `${basePath}pages/campus-map.html` },
+      { id: "parking-history", label: "Session Records", icon: "history", href: `${basePath}pages/parking-history.html` }
+    ];
+    const desktopMenuHtml = items.map((item) => {
+      const isActive = activePage === item.id ? "active" : "";
+      return `
+        <li class="sidebar-item ${isActive}">
+          <a href="${item.href}">
+            ${icon(item.icon, 18)}
+            <span>${item.label}</span>
+          </a>
+        </li>
+      `;
+    }).join("");
+    return `
+    <nav class="mobile-subnav" aria-label="Mobile Admin Navigation">
+      <a href="${basePath}pages/admin-dashboard.html" class="mobile-subnav-link ${activePage === "admin-dashboard" ? "active" : ""}">
+        ${icon("sliders", 18)}
+        <span>Analytics</span>
+      </a>
+      <a href="${basePath}pages/parking-lots.html" class="mobile-subnav-link ${activePage === "parking-lots" ? "active" : ""}">
+        ${icon("parking", 18)}
+        <span>Lots</span>
+      </a>
+      <a href="${basePath}pages/campus-map.html" class="mobile-subnav-link ${activePage === "campus-map" ? "active" : ""}">
+        ${icon("map", 18)}
+        <span>Map</span>
+      </a>
+      <a href="${basePath}pages/student-dashboard.html" class="mobile-subnav-link">
+        ${icon("user", 18)}
+        <span>Student</span>
+      </a>
+    </nav>
+
+    <aside class="dashboard-sidebar">
+      <div>
+        <div style="font-size: var(--font-size-xs); font-weight: 600; text-transform: uppercase; color: #f59e0b; margin-bottom: 0.75rem; padding-left: 0.5rem; letter-spacing: 0.5px;">
+          Admin Console
+        </div>
+        <ul class="sidebar-menu">
+          ${desktopMenuHtml}
+        </ul>
+      </div>
+
+      <div class="sidebar-footer-note">
+        <div class="flex items-center justify-between" style="margin-bottom: 6px;">
+          <span style="font-weight: 600; color: #ffffff; font-size: 11px;">Student Portal</span>
+          <a href="${basePath}pages/student-dashboard.html" class="btn btn-outline btn-sm" style="padding: 2px 8px; font-size: 10px; border-radius: 4px;">
+            Student View &rarr;
+          </a>
+        </div>
+        Campus Transport Authority. Full capacity control &amp; live session monitoring.
+      </div>
+    </aside>
+  `;
+  }
   function initSidebarEvents() {
     const moreBtn = document.getElementById("mobile-more-menu-btn");
     const drawer = document.getElementById("mobile-more-drawer");
@@ -947,6 +1014,7 @@
 
   // frontend/js/pages/parking-history.page.js
   var currentUser = null;
+  var isAdmin = false;
   var allUserSessions = [];
   var activeFilter = "all";
   document.addEventListener("DOMContentLoaded", async () => {
@@ -956,14 +1024,18 @@
       basePath: "../"
     });
     if (!currentUser) return;
+    isAdmin = currentUser.role === "admin";
     const headerContainer = document.getElementById("navbar-container");
     if (headerContainer) {
-      headerContainer.innerHTML = renderNavbar({ activePage: "parking-history", basePath: "../" });
+      headerContainer.innerHTML = renderNavbar({
+        activePage: isAdmin ? "admin" : "parking-history",
+        basePath: "../"
+      });
       initNavbarEvents("../login.html");
     }
     const sidebarContainer = document.getElementById("sidebar-container");
     if (sidebarContainer) {
-      sidebarContainer.innerHTML = renderStudentSidebar("history", "../");
+      sidebarContainer.innerHTML = isAdmin ? renderAdminSidebar("parking-history", "../") : renderStudentSidebar("history", "../");
       initSidebarEvents();
     }
     document.querySelectorAll(".history-filter-btn").forEach((btn) => {

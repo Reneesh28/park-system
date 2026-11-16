@@ -6,12 +6,13 @@
 import { authMiddleware } from '../middleware/auth.middleware.js';
 import { parkingApi } from '../api/parking.api.js';
 import { renderNavbar, initNavbarEvents } from '../components/navbar.component.js';
-import { renderStudentSidebar, initSidebarEvents } from '../components/sidebar.component.js';
+import { renderStudentSidebar, renderAdminSidebar, initSidebarEvents } from '../components/sidebar.component.js';
 import { renderSessionBadge } from '../components/badge.component.js';
 import { formatDateTime } from '../utils/formatters.js';
 import { icon } from '../utils/icons.js';
 
 let currentUser = null;
+let isAdmin = false;
 let allUserSessions = [];
 let activeFilter = 'all';
 
@@ -22,17 +23,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     basePath: '../'
   });
   if (!currentUser) return;
+  isAdmin = currentUser.role === 'admin';
 
   // Render Shell
   const headerContainer = document.getElementById('navbar-container');
   if (headerContainer) {
-    headerContainer.innerHTML = renderNavbar({ activePage: 'parking-history', basePath: '../' });
+    headerContainer.innerHTML = renderNavbar({
+      activePage: isAdmin ? 'admin' : 'parking-history',
+      basePath: '../'
+    });
     initNavbarEvents('../login.html');
   }
 
   const sidebarContainer = document.getElementById('sidebar-container');
   if (sidebarContainer) {
-    sidebarContainer.innerHTML = renderStudentSidebar('history', '../');
+    sidebarContainer.innerHTML = isAdmin
+      ? renderAdminSidebar('parking-history', '../')
+      : renderStudentSidebar('history', '../');
     initSidebarEvents();
   }
 

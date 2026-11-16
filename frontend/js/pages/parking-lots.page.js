@@ -1,19 +1,22 @@
 /**
  * PARKWISE - Parking Lots Directory Controller
- * Enhanced with ParkSmart Visual & Interaction Reference:
- * SVG Campus Map, 4-Cell Zone Metrics, Progress Meters, and QR Modals
+ * Adaptive controller supporting both Student Portal and Admin Console.
+ * When viewed by Admin: Keeps Admin Sidebar, Admin Navigation, and exposes zone capacity controls.
  */
 
 import { authMiddleware } from '../middleware/auth.middleware.js';
 import { parkingApi } from '../api/parking.api.js';
 import { recommendationService, ACADEMIC_DESTINATIONS } from '../services/recommendation.service.js';
 import { renderNavbar, initNavbarEvents } from '../components/navbar.component.js';
-import { renderStudentSidebar, initSidebarEvents } from '../components/sidebar.component.js';
+import { renderStudentSidebar, renderAdminSidebar, initSidebarEvents } from '../components/sidebar.component.js';
 import { renderAvailabilityBadge } from '../components/badge.component.js';
 import { openModal, closeModal } from '../components/modal.component.js';
+import { showToast } from '../components/toast.component.js';
 import { CampusMapController } from '../components/campus-map.component.js';
 import { icon } from '../utils/icons.js';
 
+let currentUser = null;
+let isAdmin = false;
 let allLots = [];
 let currentFilter = 'all';
 let currentSort = 'available-desc';
@@ -23,24 +26,42 @@ let mapController = null;
 let selectedZoneCode = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const user = authMiddleware.requireAuth({
+  currentUser = authMiddleware.requireAuth({
     allowedRoles: ['student', 'admin'],
     redirectUrl: '../login.html',
     basePath: '../'
   });
-  if (!user) return;
+  if (!currentUser) return;
+  isAdmin = currentUser.role === 'admin';
 
   // Render Shell
   const headerContainer = document.getElementById('navbar-container');
   if (headerContainer) {
-    headerContainer.innerHTML = renderNavbar({ activePage: 'parking-lots', basePath: '../' });
+    headerContainer.innerHTML = renderNavbar({
+      activePage: isAdmin ? 'admin' : 'parking-lots',
+      basePath: '../'
+    });
     initNavbarEvents('../login.html');
   }
 
   const sidebarContainer = document.getElementById('sidebar-container');
   if (sidebarContainer) {
-    sidebarContainer.innerHTML = renderStudentSidebar('find-parking', '../');
+    sidebarContainer.innerHTML = isAdmin
+      ? renderAdminSidebar('parking-lots', '../')
+      : renderStudentSidebar('find-parking', '../');
     initSidebarEvents();
+  }
+
+  // Adjust header text for Admin mode
+  if (isAdmin) {
+    const titleEl = document.querySelector('.dashboard-header h2');
+    if (titleEl) {
+      titleEl.innerHTML = `Campus Lots Directory <span class="badge badge-warning" style="font-size: 10px; margin-left: 6px;">Admin Console</span>`;
+    }
+    const subtitleEl = document.querySelector('.dashboard-header p');
+    if (subtitleEl) {
+      subtitleEl.textContent = 'Live university zone occupancy, capacity controls, and operational status management.';
+    }
   }
 
   // Populate Destination Selector
@@ -184,6 +205,25 @@ function renderLotsGrid() {
     if (availRatio < 0.3) progressBarClass = 'progress-danger';
     else if (availRatio < 0.6) progressBarClass = 'progress-warning';
 
+    const adminActionsHtml = `
+      <div class="flex items-center gap-2">
+        <button class="btn btn-primary btn-sm admin-edit-capacity-btn" data-lot-id="${lot.id}" style="font-size: 11px; padding: 4px 10px;">
+          ${icon('sliders', 14)}
+          <span>Edit Capacity</span>
+        </button>
+        <button class="btn btn-outline btn-sm admin-toggle-status-btn" data-lot-id="${lot.id}" style="font-size: 11px; padding: 4px 8px; border-color: ${lot.isActive !== false ? 'var(--color-danger)' : 'var(--color-success)'}; color: ${lot.isActive !== false ? 'var(--color-danger)' : 'var(--color-success)'};">
+          ${lot.isActive !== false ? 'Deactivate' : 'Activate'}
+        </button>
+      </div>
+    `;
+
+    const studentActionHtml = `
+      <a href="./scan-parking.html?lotId=${lot.id}" class="btn btn-primary btn-sm" style="font-size: 11px; padding: 4px 10px;">
+        ${icon('qr', 14)}
+        <span>Check In Here</span>
+      </a>
+    `;
+
     return `
       <div id="lot-card-${lot.lotCode}" class="card lot-card flex flex-col justify-between" style="border: 1px solid ${isSelected ? 'var(--color-secondary)' : 'var(--color-border)'};">
         <div class="card-body" style="padding: var(--space-4);">
@@ -202,7 +242,7 @@ function renderLotsGrid() {
             ${lot.location}
           </p>
 
-          <!-- 4-Cell Metric Box (Reference ZonePanel Style) -->
+          <!-- 4-Cell Metric Box -->
           <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; text-align: center; margin-bottom: var(--space-3);">
             <div style="background: #f8fafc; border-radius: var(--radius-sm); padding: 6px;">
               <div class="font-bold text-navy" style="font-size: var(--font-size-md);">${lot.totalCapacity}</div>
@@ -227,19 +267,25 @@ function renderLotsGrid() {
             <div class="progress-bar ${progressBarClass}" style="width: ${occPercent}%;"></div>
           </div>
 
-          <!-- Distance to Destination -->
-          <div style="background: var(--color-bg-alt); padding: 4px 8px; border-radius: var(--radius-sm); margin-top: 6px; margin-bottom: var(--space-3); font-size: 11px;">
-            Walking Distance: <strong>${dist}m</strong> to ${currentDestination} (~${walkMin} min walk)
-          </div>
-
-          ${isUnderutilized ? `
-            <div class="alert alert-success" style="padding: 4px 8px; font-size: 11px; margin-bottom: 0;">
-              <strong>Underutilised Zone:</strong> Earn +20 bonus reward points!
+          <!-- Context Row -->
+          ${isAdmin ? `
+            <div style="background: var(--color-bg-alt); padding: 5px 8px; border-radius: var(--radius-sm); margin-top: 6px; font-size: 11px;" class="flex items-center justify-between">
+              <span>Status: <strong>${lot.isActive !== false ? 'Active' : 'Closed'}</strong></span>
+              <span>QR Code: <strong class="font-mono">PARKWISE-LOT-${lot.lotCode}</strong></span>
             </div>
           ` : `
-            <div class="alert alert-info" style="padding: 4px 8px; font-size: 11px; margin-bottom: 0;">
-              Standard check-in zone (+10 points).
+            <div style="background: var(--color-bg-alt); padding: 4px 8px; border-radius: var(--radius-sm); margin-top: 6px; margin-bottom: var(--space-3); font-size: 11px;">
+              Walking Distance: <strong>${dist}m</strong> to ${currentDestination} (~${walkMin} min walk)
             </div>
+            ${isUnderutilized ? `
+              <div class="alert alert-success" style="padding: 4px 8px; font-size: 11px; margin-bottom: 0;">
+                <strong>Underutilised Zone:</strong> Earn +20 bonus reward points!
+              </div>
+            ` : `
+              <div class="alert alert-info" style="padding: 4px 8px; font-size: 11px; margin-bottom: 0;">
+                Standard check-in zone (+10 points).
+              </div>
+            `}
           `}
         </div>
 
@@ -248,10 +294,7 @@ function renderLotsGrid() {
             ${icon('parking', 14)}
             <span>View Details &amp; QR</span>
           </button>
-          <a href="./scan-parking.html?lotId=${lot.id}" class="btn btn-primary btn-sm" style="font-size: 11px; padding: 4px 10px;">
-            ${icon('qr', 14)}
-            <span>Check In Here</span>
-          </a>
+          ${isAdmin ? adminActionsHtml : studentActionHtml}
         </div>
       </div>
     `;
@@ -265,11 +308,123 @@ function renderLotsGrid() {
       if (lot) showLotDetailsModal(lot);
     });
   });
+
+  if (isAdmin) {
+    container.querySelectorAll('.admin-edit-capacity-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const lotId = btn.dataset.lotId;
+        const lot = allLots.find((l) => l.id === lotId);
+        if (lot) showAdminEditLotModal(lot);
+      });
+    });
+
+    container.querySelectorAll('.admin-toggle-status-btn').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const lotId = btn.dataset.lotId;
+        const lot = allLots.find((l) => l.id === lotId);
+        if (!lot) return;
+        const newStatus = lot.isActive === false;
+        btn.disabled = true;
+        const res = await parkingApi.updateLot(lot.id, { isActive: newStatus });
+        btn.disabled = false;
+        if (res.success) {
+          showToast(`Lot ${lot.lotCode} set to ${newStatus ? 'Active' : 'Closed'}`, 'success');
+          await loadLots();
+        } else {
+          showToast(res.message || 'Failed to update status', 'error');
+        }
+      });
+    });
+  }
+}
+
+function showAdminEditLotModal(lot) {
+  const modalHtml = `
+    <form id="admin-edit-lot-modal-form" class="flex flex-col gap-3">
+      <div class="form-group">
+        <label for="modal-edit-lot-name" class="form-label">Parking Lot Name</label>
+        <input
+          type="text"
+          id="modal-edit-lot-name"
+          class="form-input"
+          value="${lot.lotName}"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="modal-edit-lot-capacity" class="form-label">Total Parking Capacity (Bays)</label>
+        <input
+          type="number"
+          id="modal-edit-lot-capacity"
+          class="form-input"
+          value="${lot.totalCapacity}"
+          min="${lot.occupiedSpaces}"
+          required
+        >
+        <div class="form-help text-muted" style="font-size: 11px;">
+          Must be >= current occupied count (${lot.occupiedSpaces} taken).
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="modal-edit-lot-location" class="form-label">Location Description</label>
+        <input
+          type="text"
+          id="modal-edit-lot-location"
+          class="form-input"
+          value="${lot.location || ''}"
+        >
+      </div>
+
+      <div class="flex justify-end gap-2" style="margin-top: 8px;">
+        <button type="button" id="modal-cancel-edit-btn" class="btn btn-outline btn-sm">Cancel</button>
+        <button type="submit" id="modal-save-edit-btn" class="btn btn-primary btn-sm">Save Changes</button>
+      </div>
+    </form>
+  `;
+
+  openModal(`Edit Lot ${lot.lotCode} — ${lot.lotName}`, modalHtml);
+
+  document.getElementById('modal-cancel-edit-btn')?.addEventListener('click', closeModal);
+
+  document.getElementById('admin-edit-lot-modal-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const newName = document.getElementById('modal-edit-lot-name').value.trim();
+    const newCap = parseInt(document.getElementById('modal-edit-lot-capacity').value, 10);
+    const newLoc = document.getElementById('modal-edit-lot-location').value.trim();
+
+    if (newCap < lot.occupiedSpaces) {
+      showToast(`Cannot reduce capacity below currently occupied count (${lot.occupiedSpaces})`, 'error');
+      return;
+    }
+
+    const saveBtn = document.getElementById('modal-save-edit-btn');
+    if (saveBtn) {
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving...';
+    }
+
+    const res = await parkingApi.updateLot(lot.id, {
+      lotName: newName,
+      totalCapacity: newCap,
+      location: newLoc
+    });
+
+    closeModal();
+
+    if (res.success) {
+      showToast(`Lot ${lot.lotCode} updated successfully!`, 'success');
+      await loadLots();
+    } else {
+      showToast(res.message || 'Failed to update parking lot', 'error');
+    }
+  });
 }
 
 function showLotDetailsModal(lot) {
   const available = Math.max(0, lot.totalCapacity - lot.occupiedSpaces);
-  const occPercent = Math.round((lot.occupiedSpaces / lot.totalCapacity) * 100);
+  const qrCodeDisplay = `PARKWISE-LOT-${lot.lotCode}`;
 
   // Distances to all blocks
   const distancesHtml = ACADEMIC_DESTINATIONS.map((dest) => {
@@ -295,7 +450,7 @@ function showLotDetailsModal(lot) {
         ${renderAvailabilityBadge(available, lot.totalCapacity)}
       </div>
 
-      <!-- QR Code Simulation Display -->
+      <!-- QR Code Display -->
       <div style="background: #ffffff; border: 2px dashed var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); text-align: center;">
         <div style="display: inline-block; background: #000000; color: #ffffff; padding: var(--space-3); border-radius: var(--radius-md); font-family: monospace;">
           <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="background:#fff; padding:4px; border-radius:4px;">
@@ -318,11 +473,11 @@ function showLotDetailsModal(lot) {
             <rect x="80" y="80" width="10" height="10" fill="black"/>
           </svg>
           <div style="margin-top: 4px; font-size: 11px; color: #000000; font-weight: bold;">
-            SCAN CODE: ${lot.qrCode}
+            SCAN CODE: ${qrCodeDisplay}
           </div>
         </div>
         <p class="text-muted" style="font-size: 11px; margin-top: 4px; margin-bottom: 0;">
-          Scan this permanent lot barcode at the zone entrance.
+          Permanent zone entrance barcode.
         </p>
       </div>
 
@@ -363,9 +518,15 @@ function showLotDetailsModal(lot) {
 
       <div class="flex justify-end gap-2" style="margin-top: 4px;">
         <button id="modal-close-action-btn" class="btn btn-outline btn-sm">Close</button>
-        <a href="./scan-parking.html?lotId=${lot.id}" class="btn btn-primary btn-sm">
-          Check In at Lot ${lot.lotCode}
-        </a>
+        ${isAdmin ? `
+          <button id="modal-edit-from-details-btn" class="btn btn-primary btn-sm">
+            Edit Capacity
+          </button>
+        ` : `
+          <a href="./scan-parking.html?lotId=${lot.id}" class="btn btn-primary btn-sm">
+            Check In at Lot ${lot.lotCode}
+          </a>
+        `}
       </div>
     </div>
   `;
@@ -373,4 +534,8 @@ function showLotDetailsModal(lot) {
   openModal(`Parking Lot Details — Lot ${lot.lotCode}`, modalHtml);
 
   document.getElementById('modal-close-action-btn')?.addEventListener('click', closeModal);
+  document.getElementById('modal-edit-from-details-btn')?.addEventListener('click', () => {
+    closeModal();
+    showAdminEditLotModal(lot);
+  });
 }

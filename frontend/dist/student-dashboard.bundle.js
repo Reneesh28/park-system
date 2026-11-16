@@ -290,6 +290,13 @@
       basePath = "../"
     } = {}) {
       storageService.ensureHydrated();
+      const existingUser = this.getUser();
+      if (existingUser && allowedRoles.includes(existingUser.role)) {
+        if (!storageService.get("auth_token")) {
+          storageService.set("auth_token", `demo-token-${existingUser.id}`);
+        }
+        return existingUser;
+      }
       if (!this.isAuthenticated()) {
         const users = storageService.get("users", []);
         const fallbackUser = users.find((u) => allowedRoles.includes(u.role)) || users[0];

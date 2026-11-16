@@ -1,5 +1,16 @@
 # PARKWISE - Smart Campus Two-Wheeler Parking Management System
 
+---
+
+# ============================================================
+# FIRST-TIME DEVICE SETUP GUIDE:
+# PLEASE READ [setup.md](file:///c:/Users/Bloodblade/Desktop/PROJECTS/park%20system/setup.md) BEFORE STARTING!
+# COMPLETE STEP-BY-STEP INSTALLATION (NODE.JS, MONGODB, COMPASS,
+# DATABASE SEEDING, AND SERVER STARTUP) IS IN [setup.md](file:///c:/Users/Bloodblade/Desktop/PROJECTS/park%20system/setup.md).
+# ============================================================
+
+---
+
 ## Project Overview
 PARKWISE is a full-stack, QR-based smart campus two-wheeler parking management and incentive system. It connects university students, campus transportation authorities, and physical parking zones into an integrated, real-time ecosystem.
 
